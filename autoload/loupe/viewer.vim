@@ -3,7 +3,7 @@ scriptencoding utf-8
 let s:BORDERCHARS =  ['─', '│', '┌', '┐', '┘', '└']
 let s:WATCH_INTERVAL = 100
 
-function! loupe#window#open(expr, ...) abort
+function! loupe#viewer#open(expr, ...) abort
   let options = extend({
         \ 'line': 1,
         \ 'col': 1,
@@ -95,10 +95,9 @@ if has('nvim')
           \ printf('Normal:%s', a:options.highlight),
           \)
     call add(winids, winid)
+    call nvim_win_set_option(winid, 'cursorline', v:true)
     call nvim_win_set_cursor(winid, [a:options.lnum, a:options.col])
-    silent normal! z.
-    setlocal cursorline
-    call win_gotoid(winid_saved)
+    call s:win_execute(winid, 'silent normal! z.')
     return {
           \ 'winid': winid,
           \ 'close': { -> map(winids, { -> s:close(v:val) }) },
@@ -178,3 +177,4 @@ else
     endif
   endfunction
 endif
+
