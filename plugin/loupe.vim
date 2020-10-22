@@ -10,7 +10,7 @@ augroup loupe_internal
 augroup END
 
 function! s:set_highlights() abort
-  highlight default link LoupeNormal DiffDelete
+  highlight default link LoupeNormal Normal
 endfunction
 
 call s:set_highlights()

@@ -17,7 +17,7 @@ function! loupe#window#open(expr, ...) abort
         \}, a:0 ? a:1 : {},
         \)
   let window = s:open(a:expr, options)
-  call s:watch(win_getid(), window.close, options.watch_interval)
+  " call s:watch(win_getid(), window.close, options.watch_interval)
   return window
 endfunction
 
@@ -78,7 +78,7 @@ if has('nvim')
 
     let bufnr = bufnr(a:expr)
     let bufnr = bufnr is# -1 ? nvim_create_buf(v:false, v:false) : bufnr
-    let winid = nvim_open_win(bufnr, v:false, {
+    let winid = nvim_open_win(bufnr, v:true, {
           \ 'relative': 'win',
           \ 'win': winid_saved,
           \ 'width': width,
@@ -95,7 +95,7 @@ if has('nvim')
           \ printf('Normal:%s', a:options.highlight),
           \)
     call add(winids, winid)
-    call nvim_win_set_cursor(winid, [a:options.lnum, a:options.col])
+    silent call cursor(a:options.lnum, a:options.col)
     silent normal! z.
     setlocal cursorline
     call win_gotoid(winid_saved)

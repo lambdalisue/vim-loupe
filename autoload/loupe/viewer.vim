@@ -96,7 +96,7 @@ if has('nvim')
           \)
     call add(winids, winid)
     call nvim_win_set_option(winid, 'cursorline', v:true)
-    call nvim_win_set_cursor(winid, [a:options.lnum, a:options.col])
+    call nvim_win_set_cursor(winid, [a:options.lnum - 1, a:options.col - 1])
     call s:win_execute(winid, 'silent normal! z.')
     return {
           \ 'winid': winid,
@@ -164,7 +164,7 @@ else
           \})
     return {
           \ 'winid': winid,
-          \ 'set_cursor': { pos -> nvim_win_set_cursor(winid, pos) },
+          \ 'set_cursor': { pos ->  },
           \ 'close': { -> popup_close(winid) },
           \}
   endfunction
